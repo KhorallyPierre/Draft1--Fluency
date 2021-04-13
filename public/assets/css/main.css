@@ -34,6 +34,11 @@ body {
   line-height: 1;
 }
 
+.half {
+  width: 50%;
+  float: left;
+}
+
 ol, ul {
   list-style: none;
 }
@@ -3349,7 +3354,7 @@ body.landing .dropotron.level-0 {
   background: rgba(39, 40, 51, 0.965);
   box-shadow: 0 0 0.25em 0 rgba(0, 0, 0, 0.25);
   cursor: default;
-  height: 3.5em;
+  height: 6.9em;
   left: 0;
   line-height: 3.5em;
   position: fixed;
@@ -3495,7 +3500,7 @@ body.landing #header {
 }
 
 #banner .content .image img {
-  border-radius: 90%;
+
   display: block;
   width: 101%;
   padding-top: 1px;
@@ -4048,3 +4053,6 @@ body.is-touch #banner {
     padding: 0;
   }
 }
+
+
+/* //////////////////////////// login.ejs ============== */

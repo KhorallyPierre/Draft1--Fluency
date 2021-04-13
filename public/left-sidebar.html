@@ -17,13 +17,13 @@
 
 			<!-- Header -->
 				<header id="header">
-					<h1 id="logo"><a href="index.html"> <img class = "love" src="images/pic01.jpg" alt="">	</a></h1>
+					<h1 id="logo"><a href="/"> <img class = "love" src="images/pic01.jpg" alt="">	</a></h1>
 					<nav id="nav">
 						<ul>
-							<li><a href="index.html">Home</a></li>
+							<li><a href="index.ejs">Home</a></li>
 							<li><a href="left-sidebar.html"> About Fluency</a></li>
-							<li><a href="no-sidebar.html" class="button primary">Login</a></li>
-							<li><a href="elements.html" class="button primary">Sign Up</a></li>
+							<li><a href="/login" class="button primary">Login</a></li>
+							<li><a href="/signup" class="button primary">Sign Up</a></li>
 						</ul>
 					</nav>
 				</header>
@@ -45,7 +45,7 @@
 											<p>Sed tristique purus vitae volutpat commodo suscipit amet sed nibh. Proin a ullamcorper sed blandit. Sed tristique purus vitae volutpat commodo suscipit ullamcorper commodo suscipit amet sed nibh. Proin a ullamcorper sed blandit..</p>
 											<footer>
 												<ul class="actions">
-													<li><a href="left-sidebar.html" class="button">Learn More</a></li>
+													<li><a href="right-sidebar.html" class="button">Learn More</a></li>
 												</ul>
 											</footer>
 										</section>
@@ -86,6 +86,76 @@
 						</div>
 					</div>
 				</div>
+
+				<!-- Form -->
+				<!-- move this elsewhere -->
+				<section>
+					<h3>Questions or Concerns? Let us know</h3>
+					<form method="post" action="/questions">
+						<div class="row gtr-uniform gtr-50">
+							<div class="col-6 col-12-xsmall">
+								<input type="text" name="name" id="name" value="" placeholder="Name" />
+							</div>
+							<div class="col-6 col-12-xsmall">
+								<input type="email" name="email" id="email" value="" placeholder="Email" />
+							</div>
+
+							<div class="col-4 col-12-medium">
+								<input type="radio" id="priority-low" name="priority" checked>
+								<label for="priority-low">Low Priority</label>
+							</div>
+							<div class="col-4 col-12-medium">
+								<input type="radio" id="priority-normal" name="priority">
+								<label for="priority-normal">Normal Priority</label>
+							</div>
+							<div class="col-4 col-12-medium">
+								<input type="radio" id="priority-high" name="priority">
+								<label for="priority-high">High Priority</label>
+							</div>
+							<div class="col-6 col-12-medium">
+								<input type="checkbox" id="copy" name="copy">
+								<label for="copy">Email me a copy of this message</label>
+							</div>
+							<div class="col-6 col-12-medium">
+								<input type="checkbox" id="human" name="human" checked>
+								<label for="human">I am a human and not a robot</label>
+							</div>
+							<div class="col-12">
+								<textarea name="message" id="message" placeholder="Enter your message" rows="6"></textarea>
+							</div>
+							<div class="col-12">
+								<ul class="actions">
+									<li><input type="submit" value="Send Message" class="primary" /></li>
+									<li><input type="reset" value="Reset" /></li>
+								</ul>
+							</div>
+						</div>
+					</form>
+				</section>
+
+				<!-- Image -->
+				<section>
+					<h3>Image</h3>
+					<h4>Fit</h4>
+					<div class="box alt">
+						<div class="row gtr-50 gtr-uniform">
+
+							<p><span class="image right"><img src="images/pic08.jpg" alt="" /></span>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit
+								adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu
+								felis
+								iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit
+								adipiscing eu felis iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent tincidunt felis sagittis eget. tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu
+								felis
+								iaculis volutpat ac adipiscing accumsan eu faucibus. Integer ac pellentesque praesent. Cras aliquet accumsan curae accumsan arcu amet egestas placerat odio morbi mi adipiscing col morbi felis faucibus in gravida sollicitudin
+								interdum
+								commodo. Ante aliquam vis iaculis accumsan lorem ipsum dolor sit amet nullam. Cras aliquet accumsan curae accumsan arcu amet egestas placerat odio morbi mi adipiscing col morbi felis faucibus in gravida sollicitudin interdum
+								commodo.
+								Ante aliquam vis iaculis accumsan lorem ipsum dolor sit amet nullam.</p>
+				</section>
+
+		</div>
+	</div>
+
 
 			<!-- Footer -->
 				<footer id="footer">

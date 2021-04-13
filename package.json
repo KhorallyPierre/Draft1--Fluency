@@ -1,7 +1,7 @@
 {
   "name": "crud-express-mongo",
   "version": "1.0.0",
-  "description": "",
+  "description": "Landed by HTML5 UP\r html5up.net | @ajlkn\r Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
@@ -16,7 +16,7 @@
     "bson": ">=1.0.5",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.5",
-    "ejs": "^2.3.4",
+    "ejs": "^2.7.4",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "html": "^1.0.0",
@@ -24,10 +24,13 @@
     "mongoose": "^5.12.2",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "socket.io": "^4.0.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "minimist": ">=1.2.2",
-    "nodemon": "^2.0.4"
-  }
+    "nodemon": "^2.0.7"
+  },
+  "keywords": []
 }
