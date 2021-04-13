@@ -6,7 +6,7 @@ module.exports = function(app, passport, db) {
 
 
   // PROFILE SECTION =========================
-  //  Create (POST) - Make match between users
+  //     Create (POST) - Make match between users
   // url to access this information localhost:1000/pair/Spanish
   // create
   app.post('/userProfile', isLoggedIn, function(req, res) {
@@ -26,52 +26,11 @@ module.exports = function(app, passport, db) {
     })
   });
 
-
-// UPLOAD PROFILE PICTURE // ======================
-
-app.post('/picture', (req, res) => {
-  if(req.files){
-    console.log(req.files)
-    var file = req.files.file
-    var fileName = decodeURIComponent(file.name)
-    console.log(fileName)
-
-    file.mv('public/uploads/'+fileName, function (err){
-      if (err) {
-        res.send(err)
-      } else {
-
-        res.redirect('/userProfile')
-      }
-    })
-    db.collection('picture').save({name: req.body.name, img: "/uploads/" + fileName, thumbUp: 0, thumbDown:0}, (err, result) => {
-      if (err) return console.log(err)
-      console.log('saved to database')
-
-    })
-  }
-
-})
-
-
-
-app.delete('/picture', (req, res) => {
-  console.log("trying to delete image", decodeURIComponent(req.body.img))
-
-  db.collection('picture').findOneAndDelete({img: decodeURIComponent(req.body.img)} , (err, result) => {
-    if (err) return res.send(500, err)
-    res.send('picture deleted!')
-  })
-})
-//==============//===========================================
-
-
-// ======================= PAIRING OF USERS THAT WANT RESOURCES THE OTHER ONE HAS
-
+  //
   // who speaks desired langugage gets chosen /read
   // get is reading
   app.get('/pair/:language', /*isLoggedIn,*/ function(req, res) {
-    console.log('language', req.params.language)
+    // console.log('language', req.params.language)
     db.collection('userProfile').find({
       languages: {
         $elemMatch: {
@@ -86,9 +45,7 @@ app.delete('/picture', (req, res) => {
       res.send(result[randomPair])
     })
   });
-
-
-  // THIS PUTS LANGUAGE ON USER PROFILE
+  // THIS PUTS LANGAUGE ON USER PROFILE
   app.post('/addLanguage', /*isLoggedIn,*/ function(req, res) {
     console.log('addLanguage', req.body)
     const fluency = parseInt(req.body.country) + parseInt(req.body.teach) + parseInt(req.body.help)
@@ -124,6 +81,8 @@ app.delete('/picture', (req, res) => {
       email: req.user.local.email
     }, (err, result) => {
       if (err) return console.log(err)
+      // inside find() we need a filter to find messages addressed to a
+      //specific user (whoever is logged in)
       db.collection('requests').find({
         status: "waiting"
       }).toArray((err, requests) => {
@@ -144,13 +103,13 @@ app.delete('/picture', (req, res) => {
 
   });
 
-  // ============ DIRECT TO VIDEO ROOM WHERE STUDENT WAITS FOR TEACHER
-
-  //
+  // direct to waitng room for people who want to chat
   // implement tips on how to be a good teacher or how to learn
   // countdown
   // alert: "we've found you a match!"
-
+  // other person gets an alert that someone would like to chat
+  // - they can say yes or no and they get brought to the same room
+  //push button, then you're connected
   app.get('/profile', isLoggedIn, function(req, res) {
     db.collection('messages').findOne({
       email: req.user.local.email
@@ -175,17 +134,17 @@ app.delete('/picture', (req, res) => {
   })
 
 
-  // other person (TEACHER) gets an alert that someone would like to chat
-  // - they can say yes or no and they get brought to the same room
-  //push button, then you're connected
-
-  // put TEACHER INTO CHAT ROOM WITH WAITING STUDENT
+  // then figure out combining matching of two people (student and teacher ) and putting them in the same room
 
 
+  // what if no one wants to teach?
 
 
   // figure out web rtc implementation
 
+
+
+  // CREATE A USER IN PROCESS OF PAIRING  ==================================
 
 
 
@@ -275,7 +234,7 @@ app.delete('/picture', (req, res) => {
     }
     db.collection('requests').insertOne(profileObject, (err, result) => {
       db.collection('userProfile').findOne({
-        languages: {0:{language:'English'}}
+        languages: {'0':{language:'English'}}
         // {  $elemMatch: {
             // language: req.params.language,
             // teachOrLearn: "teach"

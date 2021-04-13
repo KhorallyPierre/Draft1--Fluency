@@ -37,56 +37,14 @@
 		<!-- Main -->
 		<div id="main" class="wrapper style1">
 			<div class="container">
-				<section class="major half">
-					<h2> My Profile </h2>
-					<div class="profilePicture">
+				<section class= "half">
+					<h2> User Profile Page</h2>
+					<div class="profilePic">
 
 					</div>
-					<div class="col-sm-6">
-						<div class="well">
-							<h3><span class="fa fa-user"></span> Fluency User Details </h3>
+					<section>
 
-							<% if (user.local.email) { %>
-							<p>
-								<strong>id</strong>: <%= user._id %><br>
-								<strong>email</strong>: <%= user.local.email %><br>
-
-							</p>
-
-							<a href="/unlink/local" class="btn btn-default">Unlink</a>
-							<% } else { %>
-							<a href="/connect/local" class="btn btn-default">Connect Local</a>
-							<% } %>
-
-						</div>
-
-						<div class="col-sm-6">
-		          <h3>User Email and Avatar </h3>
-		          <ul class="messages">
-		          <% for(var i=0; i<messages.length; i++) {%>
-		            <li class="message">
-		              <span><%= messages[i].name %></span>
-		              <img src="<%= messages[i].img %>" alt="pic">
-		              <span class="hide"><%= messages[i].thumbUp %></span>
-		              <span class="hide"><%= messages[i].thumbDown%></span>
-		              <span class="hide"><%= (messages[i].thumbUp - messages[i].thumbDown)%></span>
-		              <span><i class=" hide fa fa-thumbs-up" aria-hidden="true"></i></span>
-		              <span><i class=" hide fa fa-thumbs-down" aria-hidden="true"></i></span>
-		              <span><i class="fa fa-trash-o" aria-hidden="true"></i></span>
-		            </li>
-		          <% } %>
-		          </ul>
-		        <% if (user.local.email) { %>
-		          <form action="/messages" method="POST" enctype='multipart/form-data'>
-		            <h3 type="text" value="" name="name"> <%= user.local.email %> </h3>
-		            <input type="file" placeholder="" name="file">
-		            <button type="submit" value="Upload"> Add </button>
-		          </form>
-
-		        </div>
-		        <% } %>
-
-					</div>
+					</section>
 				</section>
 				<section class="major half">
 					<h2> Language Assessment </h2>
@@ -217,12 +175,12 @@
 								<button id="<%= userProfile.languages[i].language %>" class="connectToChat" type="submit" name="button"> Start chatting in<span> <%= userProfile.languages[i].language %></span> </button>
 
 							</form>
-							<!-- // turn html statement into an if statment - if yes, ubtton generates, if not, message "unable to find pair"
+								<!-- // turn html statement into an if statment - if yes, ubtton generates, if not, message "unable to find pair"
 
 
 							<!-- make html button with -->
 							<!-- // when clicked "start chatting in english " - create a route -->
-							<%= requests.find(element => element.language === userProfile.languages[i].language) ? "teachers are available!" : "no user online" %>
+							<%= requests.find(element => element.language === userProfile.languages[i].language) ? "we found we match!" : "unable to find a pair" %>
 						</li>
 						<% } %>
 

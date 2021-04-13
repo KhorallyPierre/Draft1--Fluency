@@ -30,13 +30,14 @@ footer, header, hgroup, menu, nav, section {
   display: block;
 }
 
-body {
-  line-height: 1;
-}
 
 .half {
   width: 50%;
   float: left;
+}
+
+body {
+  line-height: 1;
 }
 
 ol, ul {
