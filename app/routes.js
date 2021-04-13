@@ -133,6 +133,32 @@ module.exports = function(app, passport, db) {
     });
   })
 
+// upload profile picture ===========
+app.post('/picture', (req, res) => {
+  if(req.files){
+    console.log(req.files)
+    var file = req.files.file
+    var fileName = decodeURIComponent(file.name)
+    console.log(fileName)
+
+    file.mv('public/uploads/'+fileName, function (err){
+      if (err) {
+        res.send(err)
+      } else {
+
+        res.redirect('/userProfile')
+      }
+    })
+    db.collection('picture').save({name: req.body.name, img: "/uploads/" + fileName}, (err, result) => {
+      if (err) return console.log(err)
+      console.log('saved to database')
+
+    })
+  }
+
+})
+
+
 
   // then figure out combining matching of two people (student and teacher ) and putting them in the same room
 

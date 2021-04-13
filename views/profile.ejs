@@ -43,7 +43,15 @@
 
 					</div>
 					<section>
+						<% if (user.local.email) { %>
+							<form action="/picture" method="POST" enctype='multipart/form-data'>
+								<h3 type="text" value="" name="name"> <%= user.local.email %> </h3>
+								<input type="file" placeholder="" name="file">
+								<button type="submit" value="Upload"> Add </button>
+							</form>
 
+						</div>
+						<% } %>
 					</section>
 				</section>
 				<section class="major half">
