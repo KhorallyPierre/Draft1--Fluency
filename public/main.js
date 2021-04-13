@@ -84,9 +84,30 @@ Array.from(chat).forEach(function(element) {
     console.log('you clicked to chat', element.id)
     // call fetch to that pair API
     // pair API should match you with someone to talk to
-    fetch('/pair/' + element.id)
+    const url= '/pair?' + 'learning=' + element.id
+    fetch(url)
       .then(response => response.json())
-      .then(data => console.log(data));
+      .then(data => {
+
+        window.location = '/profile'
+
+
+        console.log(data)});
+
 
   })
 });
+
+// let chatForm = document.querySelectorAll('.searchChat');
+// chatForm.addEventListener('submit', searchChat);
+// function searchChat(e) {
+//   e.preventDefault();
+//   const learning = e.target.childNodes[1].getAttribute('id');
+//   console.log('GOODBYE')
+//   console.log(e.target.childNodes[1].getAttribute('id'));
+//   fetch('/pair', {
+//     method: 'post',
+//     headers: {'Content-Type' : 'application/json'},
+//     body: JSON.stringify({ learning: learning })
+//   }).then( () => {window.location.reload(); })
+// }

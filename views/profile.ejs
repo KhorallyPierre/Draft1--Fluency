@@ -43,6 +43,17 @@
 
 					</div>
 					<section>
+						<h3>User Email and Avatar </h3>
+						<ul class="picture">
+						<% for(var i=0; i< user.length; i++) {%>
+							<li class="message">
+								<span><%= picture[i].name %></span>
+								<img src="<%= picture[i].img %>" alt="profile picture">
+
+								<span><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+							</li>
+						<% } %>
+						</ul>
 						<% if (user.local.email) { %>
 							<form action="/picture" method="POST" enctype='multipart/form-data'>
 								<h3 type="text" value="" name="name"> <%= user.local.email %> </h3>
@@ -176,19 +187,19 @@
 						<li class="message">
 							<span><%= userProfile.languages[i].language %></span>
 							<span><%= userProfile.languages[i].teachOrLearn %></span>
+
 							<span><%= userProfile.languages[i].fluency %></span>
 							<span><i class="fa fa-trash" aria-hidden="true"></i></span>
-							<form class="" action="/pair" method="post">
-								<input value="<%= userProfile.languages[i].language %>"></input>
+							<form class="searchChat">
 								<button id="<%= userProfile.languages[i].language %>" class="connectToChat" type="submit" name="button"> Start chatting in<span> <%= userProfile.languages[i].language %></span> </button>
 
 							</form>
 								<!-- // turn html statement into an if statment - if yes, ubtton generates, if not, message "unable to find pair"
 
-
+// why event listenr only workong for firstl anfauge/ b utton
 							<!-- make html button with -->
 							<!-- // when clicked "start chatting in english " - create a route -->
-							<%= requests.find(element => element.language === userProfile.languages[i].language) ? "we found we match!" : "unable to find a pair" %>
+							<%= requests.find(element => element.language === userProfile.languages[i].language) ? "we found a match!" : "unable to find a pair" %>
 						</li>
 						<% } %>
 

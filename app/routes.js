@@ -79,18 +79,30 @@ module.exports = function(app, passport, db) {
   app.get('/profile', isLoggedIn, function(req, res) {
     db.collection('userProfile').findOne({
       email: req.user.local.email
-    }, (err, result) => {
+    }, (err, userProfile) => {
       if (err) return console.log(err)
       // inside find() we need a filter to find messages addressed to a
       //specific user (whoever is logged in)
       db.collection('requests').find({
         status: "waiting"
+        // maybe only find reqeusts from the last hour
+        // if over an hour it's too old
       }).toArray((err, requests) => {
         console.log('chat requests', requests)
+        let found = null
+        for (let i = 0; i < userProfile.languages.length; i++){
+          if (userProfile.languages[i].teachOrLearn === "teach") {
+            found = requests.find(request => request.language === userProfile.languages[i].language);
+
+          }
+        }
+        console.log('we found a teacher', found)
         res.render('profile.ejs', {
           user: req.user,
-          userProfile: result,
-          requests: requests
+          userProfile: userProfile,
+          requests: requests,
+          found: found
+
 
         })
       })
@@ -111,52 +123,84 @@ module.exports = function(app, passport, db) {
   // - they can say yes or no and they get brought to the same room
   //push button, then you're connected
   app.get('/profile', isLoggedIn, function(req, res) {
+    console.log('hi im the thing youre looking for', req)
     db.collection('messages').findOne({
       email: req.user.local.email
     }, (err, result) => {
       if (err) return console.log(err)
       // inside find() we need a filter to find messages addressed to a
       //specific user (whoever is logged in)
-      db.collection('messages').find({
-        message: req.user.local.message
+      db.collection('picture').find({
+        picture: req.user.local.picture
+
       }).toArray((err, messages) => {
         // not sure about my console.log below
         console.log('the displayed message is', req.user.local.message, messages)
         res.render('profile.ejs', {
           user: req.user,
           userProfile: result,
-          // not sure about below
-          messages: messages
+
+          picture: req.user.local.picture
 
         })
       })
     });
   })
 
-// upload profile picture ===========
-app.post('/picture', (req, res) => {
-  if(req.files){
-    console.log(req.files)
-    var file = req.files.file
-    var fileName = decodeURIComponent(file.name)
-    console.log(fileName)
+  // upload profile picture ===========
+  app.post('/picture', (req, res) => {
+    if (req.files) {
+      // console.log(req.files)
+      var file = req.files.file
+      var fileName = decodeURIComponent(file.name)
+      console.log(fileName)
 
-    file.mv('public/uploads/'+fileName, function (err){
-      if (err) {
-        res.send(err)
-      } else {
+      file.mv('public/uploads/' + fileName, function(err) {
+        if (err) {
+          res.send(err)
+        } else {
 
-        res.redirect('/userProfile')
-      }
-    })
-    db.collection('picture').save({name: req.body.name, img: "/uploads/" + fileName}, (err, result) => {
-      if (err) return console.log(err)
-      console.log('saved to database')
+          res.redirect('/useProfile')
+        }
+      })
+      db.collection('picture').save({
+        name: req.body.name,
+        img: "/uploads/" + fileName
+      }, (err, result) => {
+        if (err) return console.log(err)
+        console.log('saved to database')
 
-    })
-  }
+      })
+    }
 
-})
+  })
+
+  app.put('/picture', (req, res) => {
+    if (req.files) {
+      console.log('message', req.body)
+      var file = req.files.file
+      var fileName = decodeURIComponent(file.name)
+      console.log(fileName)
+
+      file.mv('public/uploads/' + fileName, function(err) {
+        if (err) {
+          res.send(err)
+        } else {
+
+          res.redirect('/userProfile')
+        }
+      })
+      db.collection('picture').save({
+        name: req.body.name,
+        img: "/uploads/" + fileName
+      }, (err, result) => {
+        if (err) return console.log(err)
+        console.log('saved to database')
+
+      })
+    }
+
+  })
 
 
 
@@ -253,30 +297,47 @@ app.post('/picture', (req, res) => {
   // needs to redirect user to a res.redirect to the video page
   // implement github code
 
-  app.post('/pair', isLoggedIn, function(req, res) {
+  app.get('/pair', isLoggedIn, function(req, res) {
     const profileObject = {
-      language: req.body.language,
-      learning: req.body.learning
+      language: req.query.language,
+      learning: req.query.learning
     }
-    db.collection('requests').insertOne(profileObject, (err, result) => {
-      db.collection('userProfile').findOne({
-        languages: {'0':{language:'English'}}
-        // {  $elemMatch: {
-            // language: req.params.language,
-            // teachOrLearn: "teach"
-        //   }
-        // }
-        // email: req.user.email
-      }, (error, pairing) => {
-        console.log('HELOOOOOOO', pairing)
-        if (error) {
-          res.redirect('request failed, try again')
-        } else {
-          res.redirect('/profile')
-        }
-        // if () ? //insert button here//  : "could not find a match"
-      })
+    // web mail - like application instead
+    // every teacher gets an update on how many people are ready to learn
+    // more passive
+    // creating requests for people who are ready to chat
+    // while theyre waiting, user will see request - they will initiate the call
+    // people who made requests will wait until someone is available
+    console.log("profile object", profileObject)
+    db.collection('requests').insertOne({
+    fromUser: req.user.local.email,
+      time: new Date,
+      language: req.query.learning,
+      status: "waiting",
+      toUser: null
 
+
+      // },
+      // (error, paired) => {
+      // var possibleTeacher = []
+      // for (el of result) {
+      //   el.languages.forEach(lang => {
+      //     if (lang.language === req.query.learning && lang.teachOrLearn === 'teach')
+      //       possibleTeacher.push({
+      //         user: el.email,
+      //         fluency: lang.fluency
+      //       });
+      // });
+      // }
+      // console.log(possibleTeacher)
+    }, (error, pairing) => {
+      console.log('HELOOOOOOO', pairing)
+      if (error) {
+        res.redirect('request failed, try again')
+      } else {
+        res.redirect('/profile')
+      }
+      // if () ? //insert button here//  : "could not find a match"
     })
   });
 
