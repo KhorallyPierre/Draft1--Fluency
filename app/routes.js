@@ -1,4 +1,34 @@
 module.exports = function(app, passport, db) {
+  // next is a value and a function that tells it when its done
+  // middleware created
+  function servicesNeeded(req, res, next) {
+    db.collection('userProfile').findOne({
+      email: req.user.local.email
+    }, (err, userProfile) => {
+      if (err) return console.log(err)
+      // inside find() we need a filter to find a teacher
+      db.collection('requests').find({
+        status: "waiting"
+        // maybe only find reqeusts from the last hour
+        // if over an hour it's too old
+      }).toArray((err, requests) => {
+        console.log('chat requests', requests)
+        let found = null
+        for (let i = 0; i < userProfile.languages.length; i++) {
+          if (userProfile.languages[i].teachOrLearn === "teach") {
+            found = requests.find(request => request.language === userProfile.languages[i].language);
+
+          }
+        }
+        req.userProfile = userProfile
+        req.requests =  requests
+        req.found = found
+        next()
+        console.log('we found a teacher', found)
+      })
+    });
+  }
+
 
   // normal routes ===============================================================
 
@@ -46,6 +76,8 @@ module.exports = function(app, passport, db) {
       res.send(result[randomPair])
     })
   });
+
+
   // THIS PUTS LANGAUGE ON USER PROFILE
   app.post('/addLanguage', /*isLoggedIn,*/ function(req, res) {
     console.log('addLanguage', req.body)
@@ -76,38 +108,17 @@ module.exports = function(app, passport, db) {
       })
   });
 
-  // displaying profile where video message is coming from ???
-  app.get('/profile', isLoggedIn, function(req, res) {
-    db.collection('userProfile').findOne({
-      email: req.user.local.email
-    }, (err, userProfile) => {
-      if (err) return console.log(err)
-      // inside find() we need a filter to find messages addressed to a
-      //specific user (whoever is logged in)
-      db.collection('requests').find({
-        status: "waiting"
-        // maybe only find reqeusts from the last hour
-        // if over an hour it's too old
-      }).toArray((err, requests) => {
-        console.log('chat requests', requests)
-        let found = null
-        for (let i = 0; i < userProfile.languages.length; i++){
-          if (userProfile.languages[i].teachOrLearn === "teach") {
-            found = requests.find(request => request.language === userProfile.languages[i].language);
-
-          }
-        }
-        console.log('we found a teacher', found)
-        res.render('profile.ejs', {
-          user: req.user,
-          userProfile: userProfile,
-          requests: requests,
-          found: found
-
-
-        })
-      })
-    });
+  // displaying people in need of specific services (ends by rendering the profile)
+  //express knows to run servicesNeeded middleware -
+  app.get('/profile', isLoggedIn, servicesNeeded, function(req, res) {
+    res.render('profile.ejs', {
+      user: req.user,
+      userProfile: req.userProfile,
+      requests: req.requests,
+      found: req.found,
+      // if req.found is a value services will be true, if null, false 
+      areServicesNeeded: Boolean(req.found)
+    })
   })
   app.get('/', function(req, res) {
     res.render('index.ejs', {
@@ -155,7 +166,7 @@ module.exports = function(app, passport, db) {
       var fileName = decodeURIComponent(file.name)
       console.log(fileName)
 
-      file.mv('uploads/'+fileName, function(err) {
+      file.mv('uploads/' + fileName, function(err) {
         if (err) {
           res.send(err)
         } else {
@@ -310,7 +321,7 @@ module.exports = function(app, passport, db) {
     // people who made requests will wait until someone is available
     console.log("profile object", profileObject)
     db.collection('requests').insertOne({
-    fromUser: req.user.local.email,
+      fromUser: req.user.local.email,
       time: new Date,
       language: req.query.learning,
       status: "waiting",

@@ -23,11 +23,18 @@
 		<!-- Header -->
 		<header id="header">
 			<h1 id="logo"><a href="/"> <img class="love" src="images/pic01.jpg" alt=""> </a></h1>
+			<%= if (areServicesNeeded){
+				<img src="insert gif here" alt="">
+			} else {
+				light off
+			}
 			<nav id="nav">
 				<ul>
 					<li><a href="/">Home</a></li>
 					<li><a href="left-sidebar.html"> About Fluency</a></li>
 					<li><a href="/logout" class="button primary">Log Out</a></li>
+					<li><a href="left-sidebar.html"> About Fluency</a></li>
+
 
 
 				</ul>
@@ -37,7 +44,7 @@
 		<!-- Main -->
 		<div id="main" class="wrapper style1">
 			<div class="container">
-				<section class= "half">
+				<section class="half">
 					<h2> User Profile Page</h2>
 					<div class="profilePic">
 						<img src="" alt="">
@@ -45,201 +52,202 @@
 					<section>
 						<h3>User Email and Avatar </h3>
 						<ul class="message">
-						<% for(var i= 0; i< user.length; i++) {%>
+							<% for(var i=0; i< user.length; i++) {%>
 							<li class="message">
 								<span><%= picture[i].name %></span>
 								<img src="<%= picture[i].img %>" alt="profile picture">
 
 								<span><i class="fa fa-trash-o" aria-hidden="true"></i></span>
 							</li>
-						<% } %>
+							<% } %>
 						</ul>
 						<% if (user.local.email) { %>
-							<form action="/picture" method="POST" enctype='multipart/form-data'>
-								<h3 type="text" value="" name="name"> <%= user.local.email %> </h3>
-								<input type="file" placeholder="" name="file">
-								<button type="submit" value="Upload"> Add </button>
-							</form>
-
-						</div>
-						<% } %>
-					</section>
-				</section>
-				<section class="major half">
-					<h2> Language Assessment </h2>
-					<form class="" action="/addLanguage" method="post">
-						<select class="" name="language">
-							<option>---SELECT LANGUAGE---</option>
-							<option>English</option>
-							<option>French</option>
-							<option>Spanish</option>
-							<option> Haitian Creole </option>
-							<option>Portuguese</option>
-
-							</optgroup>
-						</select>
-
-						<select class="" name="teachOrLearn">
-							<option value="teach"> --- WOULD YOU LIKE TO TEACH OR LEARN? ---</option>
-							<option value="teach"> I want to help others learn this language</option>
-							<option value="learn"> I want to learn this language</option>
-
-						</select>
-
-						<!-- <h3> Fluency Assesment </h3> -->
-						<section class="width">
-							<label for="toilet-select"> Is <span class="language"> this language </span> your first language? </label>
-							<section class="b">
-								<select class="ur" name="firstLang">
-									<option value="0"> Yes</option>
-									<option value="2"> No </option>
-
-								</select>
-							</section>
-
-						</section>
-
-
-
-						<section class="width">
-							<label for="dessert-select"> Do you live in a country where <span class="language">this language </span>-is spoken? </label>
-							<section class=b>
-								<select class="ur" name="country">
-									<option value="10"> Yes, most people here speak English </option>
-									<option value="6"> No, but my family speaks English </option>
-									<option value="2"> No </option>
-									<option value="4"> No, but I watch programs in English without subtitles</option>
-
-								</select>
-							</section>
-
-
-						</section>
-
-						<section class="width">
-							<label for="cartoon-select"> One a scale from 1 to 5, what do you believe your level of fluency to be? </label>
-							<section class="b">
-								<select class="ur" name="scale">
-									<option value="1"> 1</option>
-									<option value="2"> 2 </option>
-									<option value="3"> 3 </option>
-									<option value="4"> 4 </option>
-									<option value="5"> 5 </option>
-
-								</select>
-							</section>
-
-							<section class="width">
-
-								<label for="tragedy-select"> Complete the following sentence: Alicia, __________ the windows please. It's too hot in here.</label>
-								<section class=b>
-									<select class="ur" name="teach">
-										<option value="2"> opens </option>
-										<option value="10"> open</option>
-										<option value="2"> opened </option>
-										<option value="2"> will open</option>
-
-
-									</select>
-								</section>
-
-							</section>
-
-							<section class="width">
-								<label for="bird-select"> Complete the following sentence: Eli's hobbies include jogging, swimming, and __________.</label>
-								<section class=b>
-									<select class="ur2" name="book">
-										<option value="0"> to climb mountains </option>
-										<option value="0"> climb mountains </option>
-										<option value="3"> to climb </option>
-										<option value="10"> climbing mountains</option>
-									</select>
-								</section>
-
-							</section>
-
-							<section class="width">
-								<label for="rapper-select"> Complete the following sentence:Who is ____________, Marina or Sachiko?</label>
-								<section class="b">
-									<select class="ur2" name="help">
-										<option value="8"> tallest</option>
-										<option value="2"> taller</option>
-										<option value="2"> tall </option>
-										<option value="10"> the tallest</option>
-									</select>
-								</section>
-
-							</section>
-
-							<section class='a'>
-								<button> <a type="button" class="button primary"> Add Language to Profile</a></button>
-								<p id='result'></p>
-								<p id='result2'></p>
-							</section>
-						</section>
-
-
-
-					</form>
-					<ul>
-						<% for(var i=0; i<userProfile.languages.length; i++) {%>
-
-						<li class="message">
-							<span><%= userProfile.languages[i].language %></span>
-							<span><%= userProfile.languages[i].teachOrLearn %></span>
-
-							<span><%= userProfile.languages[i].fluency %></span>
-							<span><i class="fa fa-trash" aria-hidden="true"></i></span>
-							<form class="searchChat">
-								<button id="<%= userProfile.languages[i].language %>" class="connectToChat" type="submit" name="button"> Start chatting in<span> <%= userProfile.languages[i].language %></span> </button>
-
-							</form>
-								<!-- // turn html statement into an if statment - if yes, ubtton generates, if not, message "unable to find pair"
-
-// why event listenr only workong for firstl anfauge/ b utton
-							<!-- make html button with -->
-							<!-- // when clicked "start chatting in english " - create a route -->
-							<%= requests.find(element => element.language === userProfile.languages[i].language) ? "we found a match!" : "unable to find a pair" %>
-						</li>
-						<% } %>
-
-					</ul>
-
-
-					<!-- // new section for messages (steal the code from 21 savge) -
- //theres a loop that goes through messaes array -->
-					<!-- Text -->
-
-
-
-					<!-- Footer -->
-					<footer id="footer">
-						<ul class="icons">
-							<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-							<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-							<li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-						</ul>
-						<ul class="copyright">
-							<li>&copy; Untitled. All rights reserved.</li>
-							<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-						</ul>
-					</footer>
+						<form action="/picture" method="POST" enctype='multipart/form-data'>
+							<h3 type="text" value="" name="name"> <%= user.local.email %> </h3>
+							<input type="file" placeholder="" name="file">
+							<button type="submit" value="Upload"> Add </button>
+						</form>
 
 			</div>
+			<% } %>
+			</section>
 
-			<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-			<script src="main.js"></script>
+			</section>
+			<section  class="majors">
+				<ul>
+					<% for(var i=0; i<userProfile.languages.length; i++) {%>
+
+					<li class="message">
+						<span><%= userProfile.languages[i].language %></span>
+						<span><%= userProfile.languages[i].teachOrLearn %></span>
+
+						<span><%= userProfile.languages[i].fluency %></span>
+						<span><i class="fa fa-trash" aria-hidden="true"></i></span>
+						<form class="searchChat">
+							// we want to get this to appear only when a teacher has accepted request
+							<button id="<%= userProfile.languages[i].language %>" class="connectToChat" type="submit" name="button"> Start chatting in<span> <%= userProfile.languages[i].language %></span> </button>
+
+						</form>
+						<!-- // turn html statement into an if statment - if yes, ubtton generates, if not, message "unable to find pair"
+
+				// why event listenr only workong for firstl anfauge/ b utton
+						<!-- make html button with -->
+						<!-- // when clicked "start chatting in english " - create a route -->
+						<%= requests.find(element => element.language === userProfile.languages[i].language) ? "Thank you! you will be notified when a pair is available" : "unable to find a pair" %>
+					</li>
+					<% } %>
+
+				</ul>
+			</section>
+			<section class="major half">
+				<h2> Language Assessment </h2>
+				<form class="" action="/addLanguage" method="post">
+					<select class="" name="language">
+						<option>---SELECT LANGUAGE---</option>
+						<option>English</option>
+						<option>French</option>
+						<option>Spanish</option>
+						<option> Haitian Creole </option>
+						<option>Portuguese</option>
+
+						</optgroup>
+					</select>
+
+					<select class="" name="teachOrLearn">
+						<option value="teach"> --- WOULD YOU LIKE TO TEACH OR LEARN? ---</option>
+						<option value="teach"> I want to help others learn this language</option>
+						<option value="learn"> I want to learn this language</option>
+
+					</select>
+
+					<!-- <h3> Fluency Assesment </h3> -->
+					<section class="width">
+						<label for="toilet-select"> Is <span class="language"> this language </span> your first language? </label>
+						<section class="b">
+							<select class="ur" name="firstLang">
+								<option value="0"> Yes</option>
+								<option value="2"> No </option>
+
+							</select>
+						</section>
+
+					</section>
+
+
+
+					<section class="width">
+						<label for="dessert-select"> Do you live in a country where <span class="language">this language </span>-is spoken? </label>
+						<section class=b>
+							<select class="ur" name="country">
+								<option value="10"> Yes, most people here speak English </option>
+								<option value="6"> No, but my family speaks English </option>
+								<option value="2"> No </option>
+								<option value="4"> No, but I watch programs in English without subtitles</option>
+
+							</select>
+						</section>
+
+
+					</section>
+
+					<section class="width">
+						<label for="cartoon-select"> One a scale from 1 to 5, what do you believe your level of fluency to be? </label>
+						<section class="b">
+							<select class="ur" name="scale">
+								<option value="1"> 1</option>
+								<option value="2"> 2 </option>
+								<option value="3"> 3 </option>
+								<option value="4"> 4 </option>
+								<option value="5"> 5 </option>
+
+							</select>
+						</section>
+
+						<section class="width">
+
+							<label for="tragedy-select"> Complete the following sentence: Alicia, __________ the windows please. It's too hot in here.</label>
+							<section class=b>
+								<select class="ur" name="teach">
+									<option value="2"> opens </option>
+									<option value="10"> open</option>
+									<option value="2"> opened </option>
+									<option value="2"> will open</option>
+
+
+								</select>
+							</section>
+
+						</section>
+
+						<section class="width">
+							<label for="bird-select"> Complete the following sentence: Eli's hobbies include jogging, swimming, and __________.</label>
+							<section class=b>
+								<select class="ur2" name="book">
+									<option value="0"> to climb mountains </option>
+									<option value="0"> climb mountains </option>
+									<option value="3"> to climb </option>
+									<option value="10"> climbing mountains</option>
+								</select>
+							</section>
+
+						</section>
+
+						<section class="width">
+							<label for="rapper-select"> Complete the following sentence:Who is ____________, Marina or Sachiko?</label>
+							<section class="b">
+								<select class="ur2" name="help">
+									<option value="8"> tallest</option>
+									<option value="2"> taller</option>
+									<option value="2"> tall </option>
+									<option value="10"> the tallest</option>
+								</select>
+							</section>
+
+						</section>
+
+						<section class='a'>
+							<button> <a type="button" class="button primary"> Add Language to Profile</a></button>
+							<p id='result'></p>
+							<p id='result2'></p>
+						</section>
+					</section>
+
+
+
+				</form>
+
+
+
+
+
+				<!-- Footer -->
+				<footer id="footer">
+					<ul class="icons">
+						<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+						<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+						<li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy; Untitled. All rights reserved.</li>
+						<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<script src="main.js"></script>
 
 
 </body>
