@@ -15,7 +15,8 @@ module.exports = function(app, passport, db) {
       userName: req.body.userName,
       proficiency: req.body.proficiency,
       language: req.body.language,
-      learning: req.body.learning
+      learning: req.body.learning,
+      images: req.body.image
     }
     db.collection('userProfile').insertOne(profileObject, (err, result) => {
       if (err) {
@@ -130,7 +131,7 @@ module.exports = function(app, passport, db) {
       if (err) return console.log(err)
       // inside find() we need a filter to find messages addressed to a
       //specific user (whoever is logged in)
-      db.collection('picture').find({
+      db.collection('userProfile').find({
         picture: req.user.local.picture
 
       }).toArray((err, messages) => {
@@ -139,7 +140,6 @@ module.exports = function(app, passport, db) {
         res.render('profile.ejs', {
           user: req.user,
           userProfile: result,
-
           picture: req.user.local.picture
 
         })
@@ -150,39 +150,12 @@ module.exports = function(app, passport, db) {
   // upload profile picture ===========
   app.post('/picture', (req, res) => {
     if (req.files) {
-      // console.log(req.files)
+      console.log(req.files)
       var file = req.files.file
       var fileName = decodeURIComponent(file.name)
       console.log(fileName)
 
-      file.mv('public/uploads/' + fileName, function(err) {
-        if (err) {
-          res.send(err)
-        } else {
-
-          res.redirect('/useProfile')
-        }
-      })
-      db.collection('picture').save({
-        name: req.body.name,
-        img: "/uploads/" + fileName
-      }, (err, result) => {
-        if (err) return console.log(err)
-        console.log('saved to database')
-
-      })
-    }
-
-  })
-
-  app.put('/picture', (req, res) => {
-    if (req.files) {
-      console.log('message', req.body)
-      var file = req.files.file
-      var fileName = decodeURIComponent(file.name)
-      console.log(fileName)
-
-      file.mv('public/uploads/' + fileName, function(err) {
+      file.mv('uploads/'+fileName, function(err) {
         if (err) {
           res.send(err)
         } else {
@@ -190,7 +163,7 @@ module.exports = function(app, passport, db) {
           res.redirect('/userProfile')
         }
       })
-      db.collection('picture').save({
+      db.collection('userProfile').save({
         name: req.body.name,
         img: "/uploads/" + fileName
       }, (err, result) => {
@@ -201,6 +174,33 @@ module.exports = function(app, passport, db) {
     }
 
   })
+
+  // app.put('/userProfile', (req, res) => {
+  //   if (req.files) {
+  //     console.log('message', req.body)
+  //     var file = req.files.file
+  //     var fileName = decodeURIComponent(file.name)
+  //     console.log(fileName)
+  //
+  //     file.mv('public/uploads/' + fileName, function(err) {
+  //       if (err) {
+  //         res.send(err)
+  //       } else {
+  //
+  //         res.redirect('/userProfile')
+  //       }
+  //     })
+  //     db.collection('userProfile').save({
+  //       name: req.body.name,
+  //       img: "/uploads/" + fileName
+  //     }, (err, result) => {
+  //       if (err) return console.log(err)
+  //       console.log('saved to database')
+  //
+  //     })
+  //   }
+  //
+  // })
 
 
 
