@@ -23,17 +23,21 @@
 		<!-- Header -->
 		<header id="header">
 			<h1 id="logo"><a href="/"> <img class="love" src="images/pic01.jpg" alt=""> </a></h1>
-			<%= if (areServicesNeeded){
-				<img src="insert gif here" alt="">
-			} else {
-				light off
-			}
+			<% if (areServicesNeeded){ %>
+				 <h3>services are needed and theres a match</h3>
+			<% } else { %>
+				<h3> no services neeeded right now</h3>
+		<%	} %>
 			<nav id="nav">
 				<ul>
-					<li><a href="/">Home</a></li>
+					<li><a href="elements.html">Home</a></li>
 					<li><a href="left-sidebar.html"> About Fluency</a></li>
+						<li><a href="right-sidebar.html"> What to Expect</a></li>
+						<li><a href="/profile" class="button primary">My Profile </a></li>
 					<li><a href="/logout" class="button primary">Log Out</a></li>
-					<li><a href="left-sidebar.html"> About Fluency</a></li>
+
+
+
 
 
 
@@ -45,12 +49,12 @@
 		<div id="main" class="wrapper style1">
 			<div class="container">
 				<section class="half">
-					<h2> User Profile Page</h2>
+					<h2 class="userPage"> User Profile</h2>
 					<div class="profilePic">
 						<img src="" alt="">
 					</div>
 					<section>
-						<h3>User Email and Avatar </h3>
+
 						<ul class="message">
 							<% for(var i=0; i< user.length; i++) {%>
 							<li class="message">
@@ -61,44 +65,51 @@
 							</li>
 							<% } %>
 						</ul>
-						<% if (user.local.email) { %>
+						<h2>Welcome</h1><% if (user.local.email) { %>
 						<form action="/picture" method="POST" enctype='multipart/form-data'>
 							<h3 type="text" value="" name="name"> <%= user.local.email %> </h3>
 							<input type="file" placeholder="" name="file">
 							<button type="submit" value="Upload"> Add </button>
 						</form>
 
+						<section  class="majors">
+							<h2 class="myLang">My Languages</h2>
+							<ul>
+								<% for(var i=0; i<userProfile.languages.length; i++) {%>
+
+								<li class="message">
+									<span><%= userProfile.languages[i].language %></span>
+									<span><%= userProfile.languages[i].teachOrLearn %></span>
+
+									<span><%= userProfile.languages[i].fluency %></span>
+									<span><i class="fa fa-trash" aria-hidden="true"></i></span>
+									<% if (found && userProfile.languages[i].language === found.language && userProfile.languages[i].teachOrLearn === "teach" ){ %>
+										<form class="startChat" action="index.html" method="post">
+											<button id="<%= userProfile.languages[i].language %>" class="connectToChat" type="submit" name="button"> Connect with <span> <%= found.fromUser %> </span> to practice <span> <%= userProfile.languages[i].language %></span> </button>
+										</form>
+									<%} else if (userProfile.languages[i].teachOrLearn === "learn"){ %>
+										// add to this else if request is pending for user for requests that already exist (if it's pending, dont give them the choice to give other request)
+									<form class="searchChat">
+										// we want to get this to appear only when a teacher has accepted request
+										<button id="<%= userProfile.languages[i].language %>" class="connectToChat" type="submit" name="button"> Request to chat in <span> <%= userProfile.languages[i].language %></span> </button>
+									</form>
+							<%}%>
+									<!-- // turn html statement into an if statment - if yes, ubtton generates, if not, message "unable to find pair"
+
+
+									<!-- <%= requests.find(element => element.language === userProfile.languages[i].language) ? "Thank you! you will be notified when a pair is available" : "unable to find a pair" %> -->
+								</li>
+								<% } %>
+
+							</ul>
+						</section>
+
 			</div>
 			<% } %>
 			</section>
 
 			</section>
-			<section  class="majors">
-				<ul>
-					<% for(var i=0; i<userProfile.languages.length; i++) {%>
 
-					<li class="message">
-						<span><%= userProfile.languages[i].language %></span>
-						<span><%= userProfile.languages[i].teachOrLearn %></span>
-
-						<span><%= userProfile.languages[i].fluency %></span>
-						<span><i class="fa fa-trash" aria-hidden="true"></i></span>
-						<form class="searchChat">
-							// we want to get this to appear only when a teacher has accepted request
-							<button id="<%= userProfile.languages[i].language %>" class="connectToChat" type="submit" name="button"> Start chatting in<span> <%= userProfile.languages[i].language %></span> </button>
-
-						</form>
-						<!-- // turn html statement into an if statment - if yes, ubtton generates, if not, message "unable to find pair"
-
-				// why event listenr only workong for firstl anfauge/ b utton
-						<!-- make html button with -->
-						<!-- // when clicked "start chatting in english " - create a route -->
-						<%= requests.find(element => element.language === userProfile.languages[i].language) ? "Thank you! you will be notified when a pair is available" : "unable to find a pair" %>
-					</li>
-					<% } %>
-
-				</ul>
-			</section>
 			<section class="major half">
 				<h2> Language Assessment </h2>
 				<form class="" action="/addLanguage" method="post">
@@ -217,26 +228,23 @@
 				</form>
 
 
-
-
-
-				<!-- Footer -->
-				<footer id="footer">
-					<ul class="icons">
-						<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-						<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-						<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-						<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-						<li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-					</ul>
-					<ul class="copyright">
-						<li>&copy; Untitled. All rights reserved.</li>
-						<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-					</ul>
-				</footer>
-
 		</div>
+		<!-- Footer -->
+		<footer id="footer">
+			<ul class="icons">
+				<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+				<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+				<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+				<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+				<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+				<li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+			</ul>
+			<ul class="copyright">
+				<li>&copy; Untitled. All rights reserved.</li>
+				<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+			</ul>
+		</footer>
+
 
 		<!-- Scripts -->
 		<script src="assets/js/jquery.min.js"></script>

@@ -10,6 +10,20 @@ HTML, CSS, JavaScript, and MongoDB. More specifically, I used MongoDB to store t
 
 
 # Lessons Learned:
+
+3/14 - struggled a bit but created my own middleware to make sure that users get notified of when someone is ready to chat as they navigate the website
+
+3/16 - finally got users to pair using mongoDB document "waiting"
+
+3/17 - working on buttons so that user status appears on profile
+
+4/1 - created feature that prevents users from having more than one active chat at a time.
+
+4/5 - worked on trash button to make functional (will circle back to this)
+
+4/10 - implemented imbedded JS in my profile.ejs page to build out conditionals pertaining to chatting options
+
+4/14 - Added some cool css styling to my sign-up page 
 Nothing in tech is daunting as long as you make it fun! I love learning new languages (fun fact: I speak three languages, one of which I learned studying abroad) so using this theme has really made me feel like I'm actually making a difference in the lives of those around me that are passionate about language learning like I am.
 
 # My Other Projects
