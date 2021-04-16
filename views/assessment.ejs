@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<title> Welcome </title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+	</noscript>
+</head>
+  <body>
+		<header id="header">
+			<h1 id="logo"><a href="/"> <img class="love" src="images/pic01.jpg" alt=""> </a></h1>
+			<nav id="nav">
+				<ul>
+					<li><a href="elements.html">Home</a></li>
+					<li><a href="left-sidebar.html"> About Fluency</a></li>
+						<li><a href="right-sidebar.html"> What to Expect</a></li>
+						<li><a href="/profile" class="button primary">My Profile </a></li>
+					<li><a href="/logout" class="button primary">Log Out</a></li>
+
+				</ul>
+			</nav>
+		</header>
+    <section class="major half">
+			<!-- prevent user from signing up for language already in profile  -->
+      <h2> Language Assessment </h2>
+      <form class="" action="/addLanguage" method="post">
+        <select class="" name="language">
+          <option>---SELECT LANGUAGE---</option>
+          <option>English</option>
+          <option>French</option>
+          <option>Spanish</option>
+          <option> Haitian Creole </option>
+          <option>Portuguese</option>
+
+          </optgroup>
+        </select>
+
+        <select class="" name="teachOrLearn">
+          <option value="teach"> --- WOULD YOU LIKE TO TEACH OR LEARN? ---</option>
+          <option value="teach"> I want to help others learn this language</option>
+          <option value="learn"> I want to learn this language</option>
+
+        </select>
+
+        <!-- <h3> Fluency Assesment </h3> -->
+        <section class="width">
+          <label for="toilet-select"> Is <span class="language"> this language </span> your first language? </label>
+          <section class="b">
+            <select class="ur" name="firstLang">
+              <option value="0"> Yes</option>
+              <option value="2"> No </option>
+
+            </select>
+          </section>
+
+        </section>
+
+
+
+        <section class="width">
+          <label for="dessert-select"> Do you live in a country where <span class="language">this language </span>-is spoken? </label>
+          <section class=b>
+            <select class="ur" name="country">
+              <option value="10"> Yes, most people here speak English </option>
+              <option value="6"> No, but my family speaks English </option>
+              <option value="2"> No </option>
+              <option value="4"> No, but I watch programs in English without subtitles</option>
+
+            </select>
+          </section>
+
+
+        </section>
+
+        <section class="width">
+          <label for="cartoon-select"> One a scale from 1 to 5, what do you believe your level of fluency to be? </label>
+          <section class="b">
+            <select class="ur" name="scale">
+              <option value="1"> 1</option>
+              <option value="2"> 2 </option>
+              <option value="3"> 3 </option>
+              <option value="4"> 4 </option>
+              <option value="5"> 5 </option>
+
+            </select>
+          </section>
+
+          <section class="width">
+
+            <label for="tragedy-select"> Complete the following sentence: Alicia, __________ the windows please. It's too hot in here.</label>
+            <section class=b>
+              <select class="ur" name="teach">
+                <option value="2"> opens </option>
+                <option value="10"> open</option>
+                <option value="2"> opened </option>
+                <option value="2"> will open</option>
+
+
+              </select>
+            </section>
+
+          </section>
+
+          <section class="width">
+            <label for="bird-select"> Complete the following sentence: Eli's hobbies include jogging, swimming, and __________.</label>
+            <section class=b>
+              <select class="ur2" name="book">
+                <option value="0"> to climb mountains </option>
+                <option value="0"> climb mountains </option>
+                <option value="3"> to climb </option>
+                <option value="10"> climbing mountains</option>
+              </select>
+            </section>
+
+          </section>
+
+          <section class="width">
+            <label for="rapper-select"> Complete the following sentence:Who is ____________, Marina or Sachiko?</label>
+            <section class="b">
+              <select class="ur2" name="help">
+                <option value="8"> tallest</option>
+                <option value="2"> taller</option>
+                <option value="2"> tall </option>
+                <option value="10"> the tallest</option>
+              </select>
+            </section>
+
+          </section>
+
+        </section>
+
+  <button type="submit" class="button primary"> Add Language to Profile</button>
+
+      </form>
+      <!-- Scripts -->
+  		<script src="assets/js/jquery.min.js"></script>
+  		<script src="assets/js/jquery.scrolly.min.js"></script>
+  		<script src="assets/js/jquery.dropotron.min.js"></script>
+  		<script src="assets/js/jquery.scrollex.min.js"></script>
+  		<script src="assets/js/browser.min.js"></script>
+  		<script src="assets/js/breakpoints.min.js"></script>
+  		<script src="assets/js/util.js"></script>
+  		<script src="assets/js/main.js"></script>
+  		<script src="main.js"></script>
+
+
+  </body>
+</html>

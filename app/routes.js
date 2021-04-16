@@ -1,4 +1,23 @@
 module.exports = function(app, passport, db) {
+
+  // video chatroom
+  app.get('/videoChat/:room', (req, res) => {
+    console.log('videochat', req.params.room)
+    res.render('videoRoom', {
+      roomId: req.params.room
+    })
+  })
+
+
+  // assessment Page gets rendered
+  app.get('/assessment', isLoggedIn, function(req, res) {
+    res.render('assessment.ejs', {
+      user: req.user,
+      // userProfile: req.userProfile
+    })
+  })
+
+
   // next is a value and a function that tells it when its done
   // middleware created
   function servicesNeeded(req, res, next) {
@@ -7,11 +26,11 @@ module.exports = function(app, passport, db) {
     }, (err, userProfile) => {
       if (err) return console.log(err)
       let languages = userProfile.languages.filter(element => element.teachOrLearn ==
-    "teach").map(element => element.language)
-    console.log('services needed',languages)
-    if (!languages){
-      languages= []
-    }
+        "teach").map(element => element.language)
+      console.log('languages I teach', languages)
+      if (!languages) {
+        languages = []
+      }
       // inside find() we need a filter to find a teacher
       // get an array of all the languages user teaches
       // use that array with mongo DB $in to find the requests
@@ -20,24 +39,31 @@ module.exports = function(app, passport, db) {
       // pick first one and match wit that student
       db.collection('requests').find({
         status: "waiting",
-        // find array on profile each string is a langauge
-        language: {$in: languages}
-        // maybe only find reqeusts from the last hour
-        // if over an hour it's too old
+
+        language: {
+          $in: languages
+        },
+        fromUser: {
+          $ne: userProfile.email
+        }
       }).toArray((err, requests) => {
         console.log('chat requests', requests)
         let found = null
-        if (!requests){
-          requests=[]
+        if (!requests) {
+          requests = []
         }
-        for (let i = 0; i < userProfile.languages.length; i++) {
-          if (userProfile.languages[i].teachOrLearn === "teach") {
-            found = requests.find(request => request.language === userProfile.languages[i].language);
-
-          }
+        // pick one of the requests
+        // needs to be random later on
+        if (requests.length != 0) {
+          found = requests[0]
         }
+        // for (let i = 0; i < userProfile.languages.length; i++) {
+        //   if (userProfile.languages[i].teachOrLearn === "teach") {
+        //     found = requests.find(request => request.language === userProfile.languages[i].language);
+        //   }
+        // }
         req.userProfile = userProfile
-        req.requests =  requests
+        req.requests = requests
         req.found = found
         console.log('we found a teacher', found)
         next()
@@ -55,23 +81,23 @@ module.exports = function(app, passport, db) {
   //     Create (POST) - Make match between users
   // url to access this information localhost:1000/pair/Spanish
   // create
-  app.post('/userProfile', isLoggedIn, function(req, res) {
-    const profileObject = {
-      email: req.body.email,
-      userName: req.body.userName,
-      proficiency: req.body.proficiency,
-      language: req.body.language,
-      learning: req.body.learning,
-      images: req.body.image
-    }
-    db.collection('userProfile').insertOne(profileObject, (err, result) => {
-      if (err) {
-        res.redirect('request failed, try again')
-      } else {
-        res.redirect('profile.html')
-      }
-    })
-  });
+  // app.post('/userProfile', isLoggedIn, function(req, res) {
+  //   const profileObject = {
+  //     email: req.body.email,
+  //     userName: req.body.userName,
+  //     proficiency: req.body.proficiency,
+  //     language: req.body.language,
+  //     learning: req.body.learning,
+  //     images: req.body.image
+  //   }
+  //   db.collection('userProfile').insertOne(profileObject, (err, result) => {
+  //     if (err) {
+  //       res.redirect('request failed, try again')
+  //     } else {
+  //       res.redirect('profile.html')
+  //     }
+  //   })
+  // });
 
   //
   // who speaks desired langugage gets chosen /read
@@ -94,8 +120,8 @@ module.exports = function(app, passport, db) {
   });
 
 
-  // THIS PUTS LANGAUGE ON USER PROFILE
-  app.post('/addLanguage', /*isLoggedIn,*/ function(req, res) {
+  // THIS PUTS LANGUAGE ON USER PROFILE
+  app.post('/addLanguage', isLoggedIn, function(req, res) {
     console.log('addLanguage', req.body)
     const fluency = parseInt(req.body.country) + parseInt(req.body.teach) + parseInt(req.body.help)
     const languageObject = {
@@ -117,7 +143,7 @@ module.exports = function(app, passport, db) {
       }, (err, result) => {
         if (err) {
           console.log("addLanguage", err)
-          res.redirect('/userProfile')
+          res.redirect('/profile')
         } else {
           res.redirect('/profile')
         }
@@ -127,51 +153,59 @@ module.exports = function(app, passport, db) {
   // displaying people in need of specific services (ends by rendering the profile)
   //express knows to run servicesNeeded middleware -
   app.get('/profile', isLoggedIn, servicesNeeded, function(req, res) {
+    db.collection('requests').find({
+        fromUser: req.user.local.email
+      }
 
-    res.render('profile.ejs', {
-      user: req.user,
-      userProfile: req.userProfile,
-      requests: req.requests,
-      found: req.found,
-      // if req.found is a value services will be true, if null, false
-      areServicesNeeded: Boolean(req.found)
+    ).toArray((err, myRequests) => {
+      res.render('profile.ejs', {
+        user: req.user,
+        userProfile: req.userProfile,
+        requests: req.requests,
+        found: req.found,
+        myRequests: myRequests,
+        // if req.found is a value services will be true, if null, false
+        areServicesNeeded: Boolean(req.found)
+      })
     })
   })
 
 
-  app.get('/',  function(req, res) {
+
+
+  app.get('/', function(req, res) {
     res.render('index.ejs', {
 
     })
 
   });
 
-// duplicate profile route
-// not sure what this does
-//   app.get('/profile', isLoggedIn, servicesNeeded, function(req, res) {
-//     console.log('teacher available', req)
-//     db.collection('messages').findOne({
-//       email: req.user.local.email
-//     }, (err, result) => {
-//       if (err) return console.log(err)
-//       // inside find() we need a filter to find messages addressed to a
-//       //specific user (whoever is logged in)
-//       db.collection('userProfile').find({
-//         picture: req.user.local.picture
-//
-//       }).toArray((err, messages) => {
-//         // not sure about my console.log below
-//         console.log('the displayed message is', req.user.local.message, messages)
-//         res.render('profile.ejs', {
-//           user: req.user,
-//           userProfile: result,
-//           picture: req.user.local.picture,
-//           areServicesNeeded: Boolean(req.found)
-//
-//         })
-//       })
-//     });
-//   })
+  // duplicate profile route
+  // not sure what this does
+  //   app.get('/profile', isLoggedIn, servicesNeeded, function(req, res) {
+  //     console.log('teacher available', req)
+  //     db.collection('messages').findOne({
+  //       email: req.user.local.email
+  //     }, (err, result) => {
+  //       if (err) return console.log(err)
+  //       // inside find() we need a filter to find messages addressed to a
+  //       //specific user (whoever is logged in)
+  //       db.collection('userProfile').find({
+  //         picture: req.user.local.picture
+  //
+  //       }).toArray((err, messages) => {
+  //         // not sure about my console.log below
+  //         console.log('the displayed message is', req.user.local.message, messages)
+  //         res.render('profile.ejs', {
+  //           user: req.user,
+  //           userProfile: result,
+  //           picture: req.user.local.picture,
+  //           areServicesNeeded: Boolean(req.found)
+  //
+  //         })
+  //       })
+  //     });
+  //   })
 
   // upload profile picture ===========
   app.post('/picture', (req, res) => {
@@ -186,7 +220,7 @@ module.exports = function(app, passport, db) {
           res.send(err)
         } else {
 
-          res.redirect('/userProfile')
+          res.redirect('/profile')
         }
       })
       db.collection('userProfile').save({
@@ -205,12 +239,30 @@ module.exports = function(app, passport, db) {
 
 
   // then figure out combining matching of two people (student and teacher ) and putting them in the same room
+  // web rtc implementation
+  // we need requests accepted by a teacher to lead to video Page
 
+  // reading paired match
+  // add event listeners so that when button is clicked, teacher is redirected to video chat room
+  // student recieves an alert " A teacher is waiting for you. Go to your profile to accept"
+  // on student profile page - they click and meet teacher in chat room
 
-
-  // figure out web rtc implementation
-
-
+  app.get('/pair/:language', /*isLoggedIn,*/ function(req, res) {
+    // console.log('language', req.params.language)
+    db.collection('userProfile').find({
+      languages: {
+        $elemMatch: {
+          language: req.params.language,
+          teachOrLearn: "teach"
+        }
+      }
+    }).toArray((err, result) => {
+      // console.log('paired choices', result)
+      const randomPair = Math.floor(Math.random() * result.length)
+      if (err) return console.log(err)
+      res.send(result[randomPair])
+    })
+  });
 
 
 
@@ -299,11 +351,6 @@ module.exports = function(app, passport, db) {
       language: req.query.language,
       learning: req.query.learning
     }
-    // web mail - like application instead
-    // every teacher gets an update on how many people are ready to learn
-    // more passive
-    // creating requests for people who are ready to chat
-    // while theyre waiting, user will see request - they will initiate the call
     // people who made requests will wait until someone is available
     console.log("profile object", profileObject)
     db.collection('requests').insertOne({

@@ -32,8 +32,24 @@ footer, header, hgroup, menu, nav, section {
 
 
 .half {
-  width: 50%;
+  width: 30%;
   float: left;
+}
+
+.containerLanguage {
+  width: 40%;
+  float: left;
+}
+
+/* .page-wrapper {
+  margin-top: 70px;
+} */
+
+
+.majors {
+  border: 2px solid lavender;
+  overflow:scroll;
+  height: 200px;
 }
 
 #about {
@@ -51,6 +67,8 @@ body {
 .myLang, .userPage {
   color: rgb(198, 77, 100);
 }
+
+
 ol, ul {
   list-style: none;
 }
@@ -99,8 +117,11 @@ html {
   box-sizing: inherit;
 }
 
-html, body {
-  background: #1c1d26;
+body {
+  background-image: url('images/background.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 body.is-preload *, body.is-preload *:before, body.is-preload *:after {
@@ -112,6 +133,10 @@ body.is-preload *, body.is-preload *:before, body.is-preload *:after {
   -webkit-transition: none !important;
   -ms-transition: none !important;
   transition: none !important;
+}
+
+body.is-preload {
+  background-image: url('images/background.png');
 }
 
 body, input, select, textarea {
@@ -262,15 +287,6 @@ pre code {
 
 .fluency {
   color: rgb(198, 77, 100);
-}
-
-.majors {
-  border: 2px solid lavender;
-  border-radius: 10%;
-  padding-left: 20px;
-  margin-left: -15%;
-  overflow:scroll;
-  height: 400px;
 }
 
 
@@ -2204,6 +2220,18 @@ header.major {
   text-align: center;
 }
 
+.profilePic {
+  height: 210px;
+  width: 210px;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.pictureProfile {
+  width: 100%;
+  height: 100%;
+}
 header.major:after {
   background: #e44c65;
   content: '';
@@ -2220,12 +2248,25 @@ footer.major {
 /* Form */
 form {
   margin: 0 0 2em 0;
+  margin-top: 100px;
+
+}
+
+.addTo {
+  color: white;
+  padding: 40px;
+  margin-left: 30px;
 }
 
 form.cta {
   max-width: 35em;
   margin-left: auto;
   margin-right: auto;
+}
+
+.addLanguage2 {
+  width: 20%;
+  float: left;
 }
 
 label {
@@ -3202,7 +3243,7 @@ body.is-touch .spotlight {
 
 /* Wrapper */
 .wrapper {
-  padding: 6em 0 4em 0;
+  padding: 0 0 4em 0;
 }
 
 .wrapper.style2 {
@@ -3371,10 +3412,7 @@ body.landing .dropotron.level-0 {
   margin-top: 0;
 }
 
-/* Header */
-#page-wrapper {
-  padding-top: 3.5em;
-}
+
 
 #header {
   background: rgba(39, 40, 51, 0.965);
@@ -3383,7 +3421,6 @@ body.landing .dropotron.level-0 {
   height: 6.9em;
   left: 0;
   line-height: 3.5em;
-  position: fixed;
   top: 0;
   width: 100%;
   z-index: 100;
@@ -3540,8 +3577,9 @@ body.is-touch #banner {
 /* Footer */
 #footer {
   background: #272833;
-  padding: 6em 0;
+  padding: 1em 0;
   text-align: center;
+  clear: both;
 }
 
 #footer .icons .icon.alt {

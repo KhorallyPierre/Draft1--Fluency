@@ -24,22 +24,17 @@
 		<header id="header">
 			<h1 id="logo"><a href="/"> <img class="love" src="images/pic01.jpg" alt=""> </a></h1>
 			<% if (areServicesNeeded){ %>
-				 <h3>services are needed and theres a match</h3>
+			<h3>services are needed and theres a match</h3>
 			<% } else { %>
-				<h3> no services neeeded right now</h3>
-		<%	} %>
+			<h3> no services neeeded right now</h3>
+			<%	} %>
 			<nav id="nav">
 				<ul>
 					<li><a href="elements.html">Home</a></li>
 					<li><a href="left-sidebar.html"> About Fluency</a></li>
-						<li><a href="right-sidebar.html"> What to Expect</a></li>
-						<li><a href="/profile" class="button primary">My Profile </a></li>
+					<li><a href="right-sidebar.html"> What to Expect</a></li>
+					<li><a href="/profile" class="button primary">My Profile </a></li>
 					<li><a href="/logout" class="button primary">Log Out</a></li>
-
-
-
-
-
 
 				</ul>
 			</nav>
@@ -47,11 +42,11 @@
 
 		<!-- Main -->
 		<div id="main" class="wrapper style1">
-			<div class="container">
+			<div class="container containerWelcome">
 				<section class="half">
 					<h2 class="userPage"> User Profile</h2>
 					<div class="profilePic">
-						<img src="" alt="">
+					<img class="pictureProfile" src="images/picture.jpg" alt="profile picture">
 					</div>
 					<section>
 
@@ -65,168 +60,63 @@
 							</li>
 							<% } %>
 						</ul>
-						<h2>Welcome</h1><% if (user.local.email) { %>
-						<form action="/picture" method="POST" enctype='multipart/form-data'>
-							<h3 type="text" value="" name="name"> <%= user.local.email %> </h3>
-							<input type="file" placeholder="" name="file">
-							<button type="submit" value="Upload"> Add </button>
-						</form>
-
-						<section  class="majors">
-							<h2 class="myLang">My Languages</h2>
-							<ul>
-								<% for(var i=0; i<userProfile.languages.length; i++) {%>
-
-								<li class="message">
-									<span><%= userProfile.languages[i].language %></span>
-									<span><%= userProfile.languages[i].teachOrLearn %></span>
-
-									<span><%= userProfile.languages[i].fluency %></span>
-									<span><i class="fa fa-trash" aria-hidden="true"></i></span>
-									<% if (found && userProfile.languages[i].language === found.language && userProfile.languages[i].teachOrLearn === "teach" ){ %>
-										<form class="startChat" action="index.html" method="post">
-											<button id="<%= userProfile.languages[i].language %>" class="connectToChat" type="submit" name="button"> Connect with <span> <%= found.fromUser %> </span> to practice <span> <%= userProfile.languages[i].language %></span> </button>
-										</form>
-									<%} else if (userProfile.languages[i].teachOrLearn === "learn"){ %>
-										// add to this else if request is pending for user for requests that already exist (if it's pending, dont give them the choice to give other request)
-									<form class="searchChat">
-										// we want to get this to appear only when a teacher has accepted request
-										<button id="<%= userProfile.languages[i].language %>" class="connectToChat" type="submit" name="button"> Request to chat in <span> <%= userProfile.languages[i].language %></span> </button>
-									</form>
-							<%}%>
-									<!-- // turn html statement into an if statment - if yes, ubtton generates, if not, message "unable to find pair"
-
-
-									<!-- <%= requests.find(element => element.language === userProfile.languages[i].language) ? "Thank you! you will be notified when a pair is available" : "unable to find a pair" %> -->
-								</li>
-								<% } %>
-
-							</ul>
-						</section>
-
+						<% if (user.local.email) { %>
+							<form action="/picture" method="POST" enctype='multipart/form-data'>
+								<h3 type="text" value="" name="name"> <%= user.local.email %> </h3>
+								<span>change profile picture</span>
+								<input type="file" placeholder="" name="file">
+								<button type="submit" value="Upload"> Add </button>
+							</form>
+					</section>
+				</section>
 			</div>
-			<% } %>
+			<div class="container ">
+				<h2 class="myLang">My Languages</h2>
+				<section class="containerLanguage">
+
+					<ul>
+						<% for(var i=0; i<userProfile.languages.length; i++) {%>
+
+						<li class="message majors">
+							<span><%= userProfile.languages[i].language %></span>
+							<span><%= userProfile.languages[i].teachOrLearn %></span>
+
+							<span><%= userProfile.languages[i].fluency %></span>
+							<span><i class="fa fa-trash" aria-hidden="true"></i></span>
+							<% if (found && userProfile.languages[i].language === found.language && userProfile.languages[i].teachOrLearn === "teach" ){ %>
+							<form class="startChat" action="/videoChat/<%=found._id%>" method="get">
+								<button id="<%= userProfile.languages[i].language %>" class="connectToChat" type="submit" name="button"> Connect with <span> <%= found.fromUser %> </span> to practice <span> <%= userProfile.languages[i].language %></span> </button>
+							</form>
+							<%} else if (userProfile.languages[i].teachOrLearn === "learn"){
+
+								let myRequest = myRequests.find(request => request.language === userProfile.languages[i].language && request.fromUser === userProfile.email && request.status === 'waiting' )
+								console.log('looking for student request', myRequest, myRequests, userProfile.languages[i].language )
+								if (myRequest){ %>
+									<form class="startChat" action="/videoChat/<%=myRequest._id%>" method="get">
+										<button id="<%= userProfile.languages[i].language %>" class="connectToChat" type="submit" name="button"> Wait for Teacher to practice <span> <%= userProfile.languages[i].language %></span> </button>
+									</form>
+							<%	}%>
+							<!-- // add to this else if request is pending for user for requests that already exist (if it's pending, dont give them the choice to give other request) -->
+							<form class="searchChat">
+								<!-- // we want to get this to appear only when a teacher has accepted request -->
+								<button id="<%= userProfile.languages[i].language %>" class="connectToChat" type="submit" name="button"> Request to chat in <span> <%= userProfile.languages[i].language %></span> </button>
+							</form>
+							<%}%>
+						<!-- // turn html statement into an if statment - if yes, ubtton generates, if not, message "unable to find pair"
+
+
+						<!-- <%= requests.find(element => element.language === userProfile.languages[i].language) ? "Thank you! you will be notified when a pair is available" : "unable to find a pair" %> -->
+						</li>
+						<% } %>
+
+					</ul>
+				</section>
+				<% } %>
+			</div>
+			<section class="addLanguage2">
+				<button class="addTo button primary" type="button" name="button"> <a class="addTo" href="/assessment"> Add Language to Profile</a>
+				</button>
 			</section>
-
-			</section>
-
-			<section class="major half">
-				<h2> Language Assessment </h2>
-				<form class="" action="/addLanguage" method="post">
-					<select class="" name="language">
-						<option>---SELECT LANGUAGE---</option>
-						<option>English</option>
-						<option>French</option>
-						<option>Spanish</option>
-						<option> Haitian Creole </option>
-						<option>Portuguese</option>
-
-						</optgroup>
-					</select>
-
-					<select class="" name="teachOrLearn">
-						<option value="teach"> --- WOULD YOU LIKE TO TEACH OR LEARN? ---</option>
-						<option value="teach"> I want to help others learn this language</option>
-						<option value="learn"> I want to learn this language</option>
-
-					</select>
-
-					<!-- <h3> Fluency Assesment </h3> -->
-					<section class="width">
-						<label for="toilet-select"> Is <span class="language"> this language </span> your first language? </label>
-						<section class="b">
-							<select class="ur" name="firstLang">
-								<option value="0"> Yes</option>
-								<option value="2"> No </option>
-
-							</select>
-						</section>
-
-					</section>
-
-
-
-					<section class="width">
-						<label for="dessert-select"> Do you live in a country where <span class="language">this language </span>-is spoken? </label>
-						<section class=b>
-							<select class="ur" name="country">
-								<option value="10"> Yes, most people here speak English </option>
-								<option value="6"> No, but my family speaks English </option>
-								<option value="2"> No </option>
-								<option value="4"> No, but I watch programs in English without subtitles</option>
-
-							</select>
-						</section>
-
-
-					</section>
-
-					<section class="width">
-						<label for="cartoon-select"> One a scale from 1 to 5, what do you believe your level of fluency to be? </label>
-						<section class="b">
-							<select class="ur" name="scale">
-								<option value="1"> 1</option>
-								<option value="2"> 2 </option>
-								<option value="3"> 3 </option>
-								<option value="4"> 4 </option>
-								<option value="5"> 5 </option>
-
-							</select>
-						</section>
-
-						<section class="width">
-
-							<label for="tragedy-select"> Complete the following sentence: Alicia, __________ the windows please. It's too hot in here.</label>
-							<section class=b>
-								<select class="ur" name="teach">
-									<option value="2"> opens </option>
-									<option value="10"> open</option>
-									<option value="2"> opened </option>
-									<option value="2"> will open</option>
-
-
-								</select>
-							</section>
-
-						</section>
-
-						<section class="width">
-							<label for="bird-select"> Complete the following sentence: Eli's hobbies include jogging, swimming, and __________.</label>
-							<section class=b>
-								<select class="ur2" name="book">
-									<option value="0"> to climb mountains </option>
-									<option value="0"> climb mountains </option>
-									<option value="3"> to climb </option>
-									<option value="10"> climbing mountains</option>
-								</select>
-							</section>
-
-						</section>
-
-						<section class="width">
-							<label for="rapper-select"> Complete the following sentence:Who is ____________, Marina or Sachiko?</label>
-							<section class="b">
-								<select class="ur2" name="help">
-									<option value="8"> tallest</option>
-									<option value="2"> taller</option>
-									<option value="2"> tall </option>
-									<option value="10"> the tallest</option>
-								</select>
-							</section>
-
-						</section>
-
-						<section class='a'>
-							<button> <a type="button" class="button primary"> Add Language to Profile</a></button>
-							<p id='result'></p>
-							<p id='result2'></p>
-						</section>
-					</section>
-
-
-
-				</form>
-
 
 		</div>
 		<!-- Footer -->
