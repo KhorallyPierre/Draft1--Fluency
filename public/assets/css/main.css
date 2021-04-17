@@ -56,13 +56,13 @@ footer, header, hgroup, menu, nav, section {
   background-image: url('images/yess.png');
   height: 700px;
   float: left;
-  margin-left: 117px;
+  margin-left: 61px;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .twoSidesLeft {
-  width: 400px;
+  width: 430px;
   background-image: url('images/typing.gif');
   height: 700px;
   float: left;
@@ -71,20 +71,27 @@ footer, header, hgroup, menu, nav, section {
   background-size: cover;
 }
 
-
 .assessment2 {
   width: 40%;
   margin-left: 39px;
   color: rgb(198, 77, 100);
-  height: 600px;
+  height: 630px;
   overflow: scroll;
+  background-color: rgba(51, 71, 24, 0.5);
+  border-radius: 10%;
+  order: 1px solid rgba(198, 77, 100, 0.5);
 }
 
 .half {
   width: 30%;
   float: left;
-  margin-left: 39px;
+  margin-left: -48px;
   color: rgb(198, 77, 100);
+  height: 700px;
+}
+
+.submit {
+  text-align: center;
 }
 
 .addToProfile {
@@ -242,13 +249,15 @@ body.is-preload *, body.is-preload *:before, body.is-preload *:after {
   background-image: url(images/glasses.jpg);
   background-repeat: no-repeat;
   position: absolute;
-  left: 38.6%;
-  top: -14%;
+  left: 17.6%;
+      top: -67%;
+
 }
 
 body.is-preload {
   background-image: url('images/background.png');
 }
+
 
 body, input, select, textarea {
   color: rgba(255, 255, 255, 0.75);
@@ -265,10 +274,20 @@ body, input, select, textarea {
 }
 
 .books {
-  background-image: url('images/add.png');
-  height: 400px;
-  width: 600px;
+  background-image: url('images/add.gif');
+  height: 463px;
+  width: 444px;
   background-repeat: no-repeat;
+  margin-top: 23px;
+  border-radius: 5%;
+}
+
+.profileQuote {
+  background-image: url(images/limits.png);
+height: 315px;
+width: 316px;
+background-repeat: no-repeat;
+border-radius: 5%;
 }
 
 a {
@@ -742,6 +761,10 @@ body.landing:before {
   font-weight: 900;
 }
 
+#fourr {
+  background-image: url('images/background.png');
+}
+
 body.landing:before {
   -moz-animation: spinner-show 1.5s 1 0.25s ease forwards, spinner-hide 0.25s ease-in-out forwards !important;
   -webkit-animation: spinner-show 1.5s 1 0.25s ease forwards, spinner-hide 0.25s ease-in-out forwards !important;
@@ -809,10 +832,20 @@ body.landing.is-preload:after {
 }
 
 /* Container */
+.container2 {
+  margin: 0 auto;
+  max-width: calc(100% - 4em);
+  width: 70em;
+  color: white;
+  background: rgba(198,77, 100, .7);
+  border-radius: 5%;
+}
+
 .container {
   margin: 0 auto;
   max-width: calc(100% - 4em);
   width: 70em;
+  color: white;
 }
 
 .container.xsmall {
@@ -2374,7 +2407,7 @@ footer.major {
 
 /* Form */
 form {
-  margin: 0 0 2em 0;
+  margin: 0 0 5px 0;
   margin-top: 5px;
 }
 
@@ -2383,6 +2416,14 @@ form {
   padding: 40px;
   margin-left: 16px;
   font-size: 20px;
+}
+
+.half3 {
+  width: 30%;
+float: left;
+margin-left: 61px;
+color: rgb(198, 77, 100);
+height: 700px;
 }
 
 form.cta {
@@ -3464,6 +3505,7 @@ body.is-touch .spotlight {
   -ms-transition: -ms-transform 1s ease, opacity 1s ease;
   transition: transform 1s ease, opacity 1s ease;
   opacity: 1;
+
 }
 
 .wrapper.fade-up.inactive>.container {
@@ -3547,7 +3589,7 @@ body.landing .dropotron.level-0 {
 }
 
 #header {
-  background: rgb(228 207 207 / 50%);
+  background: rgba(225, 225, 225, .5);
   box-shadow: 0 0 0.25em 0 rgba(0, 0, 0, 0.25);
   cursor: default;
   height: 3.9em;

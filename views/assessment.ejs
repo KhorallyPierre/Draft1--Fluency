@@ -14,11 +14,22 @@
 <body>
 	<header id="header">
 		<h1 id="logo"><a href="/"> <img class="love" src="images/pic01.jpg" alt=""> </a></h1>
+
+		<% if (areServicesNeeded){ %>
+		<div class="alertt">
+			<h3 class="chatNow"> go talk</h3>
+		</div>
+		<% } else { %>
+		<div class="noAlertt">
+			<h3 class="chatNow">no one to talk to</h3>
+		</div>
+		<%	} %>
+
 		<nav id="nav">
 			<ul>
-				<li><a href="elements.html">Home</a></li>
-				<li><a href="left-sidebar.html"> About Fluency</a></li>
-				<li><a href="right-sidebar.html"> What to Expect</a></li>
+				<li><a href="/">Home</a></li>
+				<li><a href="/left-sidebar"> About Fluency</a></li>
+				<li><a href="/right-sidebar"> What to Expect</a></li>
 				<li><a href="/profile" class="button primary">My Profile </a></li>
 				<li><a href="/logout" class="button primary">Log Out</a></li>
 
@@ -29,10 +40,11 @@
 	<div class="twoSidesLeft">
 
 	</div>
-	<section class="major half assessment2">
+	<section class="major half3 assessment2">
 		<!-- prevent user from signing up for language already in profile  -->
+
 		<form class="" action="/addLanguage" method="post">
-			<select class="" name="language">
+			<select class="width widthSelect" name="language">
 				<option>---SELECT LANGUAGE---</option>
 				<option>English</option>
 				<option>French</option>
@@ -135,7 +147,7 @@
 
 			</section>
 		</form>
-		<section>
+		<section class="submit">
 			<button type="submit" class="button primary"> Add Language to Profile</button>
 		</section>
 	</section>
@@ -154,7 +166,6 @@
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
 		<script src="main.js"></script>
-
 
 </body>
 

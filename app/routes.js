@@ -14,8 +14,32 @@ module.exports = function(app, passport, db) {
     res.render('assessment.ejs', {
       user: req.user,
       // userProfile: req.userProfile
+      areServicesNeeded: Boolean(req.found)
     })
   })
+
+  // assessment Page gets rendered
+  app.get('/right-sidebar', isLoggedIn, function(req, res) {
+    res.render('right-sidebar.ejs', {
+      user: req.user,
+      // userProfile: req.userProfile
+      areServicesNeeded: Boolean(req.found)
+    })
+  })
+
+  app.get('/left-sidebar', isLoggedIn, function(req, res) {
+    res.render('left-sidebar.ejs', {
+      user: req.user,
+      // userProfile: req.userProfile
+      areServicesNeeded: Boolean(req.found)
+    })
+  })
+
+
+  
+
+
+
 
 
   // next is a value and a function that tells it when its done
@@ -169,6 +193,8 @@ module.exports = function(app, passport, db) {
       })
     })
   })
+
+
 
 
 
