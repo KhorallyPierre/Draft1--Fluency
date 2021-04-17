@@ -54,16 +54,19 @@ app.set('view engine', 'ejs'); // set up ejs for templating
 //   })
 // })
 // establish connection using roomID and
-io.on('connection', socket => {
-  socket.on('join-room', (roomId, userId) => {
-    socket.join(roomId)
-    socket.to(roomId).broadcast.emit('user-connected', userId)
+// removing socket io because we might not need it
+// io.on('connection', socket => {
+//   socket.on('join-room', (roomId, userId) => {
+//     socket.join(roomId)
+//     socket.to(roomId).broadcast.emit('user-connected', userId)
+//
+//     socket.on('disconnect', () => {
+//       socket.to(roomId).broadcast.emit('user-disconnected', userId)
+//     })
+//   })
+// })
 
-    socket.on('disconnect', () => {
-      socket.to(roomId).broadcast.emit('user-disconnected', userId)
-    })
-  })
-})
+// connecting to servers w/o socket io
 
 
 

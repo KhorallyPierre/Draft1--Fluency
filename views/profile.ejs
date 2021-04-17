@@ -22,11 +22,18 @@
 		<!-- Header -->
 		<!-- Header -->
 		<header id="header">
-			<h1 id="logo"><a href="/"> <img class="love" src="images/pic01.jpg" alt=""> </a></h1>
+			<div class="logoStyle">
+				<h1 id="logo"><a href="/"> <img class="love" src="images/pic01.jpg" alt=""> </a></h1>
+			</div>
+
 			<% if (areServicesNeeded){ %>
-			<h3>services are needed and theres a match</h3>
+			<div class="alertt">
+				<h3 class="chatNow"> go talk</h3>
+			</div>
 			<% } else { %>
-			<h3> no services neeeded right now</h3>
+			<div class="noAlertt">
+				<h3 class="chatNow">no one to talk to</h3>
+			</div>
 			<%	} %>
 			<nav id="nav">
 				<ul>
@@ -42,11 +49,12 @@
 
 		<!-- Main -->
 		<div id="main" class="wrapper style1">
+			<h2 class="userPage"> User Profile</h2>
 			<div class="container containerWelcome">
 				<section class="half">
-					<h2 class="userPage"> User Profile</h2>
+
 					<div class="profilePic">
-					<img class="pictureProfile" src="images/picture.jpg" alt="profile picture">
+						<img class="pictureProfile" src="images/picture.jpg" alt="profile picture">
 					</div>
 					<section>
 
@@ -61,61 +69,78 @@
 							<% } %>
 						</ul>
 						<% if (user.local.email) { %>
-							<form action="/picture" method="POST" enctype='multipart/form-data'>
-								<h3 type="text" value="" name="name"> <%= user.local.email %> </h3>
-								<span>change profile picture</span>
-								<input type="file" placeholder="" name="file">
-								<button type="submit" value="Upload"> Add </button>
-							</form>
+						<form action="/picture" method="POST" enctype='multipart/form-data'>
+							<h3 type="text" value="" name="name"> <%= user.local.email %> </h3>
+							<span>change profile picture</span>
+							<input type="file" placeholder="" name="file">
+							<button class="addPic" type="submit" value="Upload"> Add </button>
+						</form>
 					</section>
 				</section>
 			</div>
 			<div class="container ">
-				<h2 class="myLang">My Languages</h2>
+
 				<section class="containerLanguage">
+					<section class="containerLanguage2">
+						<h3 class="myLang2">My Languages</h3>
+						<ul>
+							<% for(var i=0; i<userProfile.languages.length; i++) {%>
 
-					<ul>
-						<% for(var i=0; i<userProfile.languages.length; i++) {%>
-
-						<li class="message majors">
-							<span><%= userProfile.languages[i].language %></span>
-							<span><%= userProfile.languages[i].teachOrLearn %></span>
-
-							<span><%= userProfile.languages[i].fluency %></span>
-							<span><i class="fa fa-trash" aria-hidden="true"></i></span>
-							<% if (found && userProfile.languages[i].language === found.language && userProfile.languages[i].teachOrLearn === "teach" ){ %>
-							<form class="startChat" action="/videoChat/<%=found._id%>" method="get">
-								<button id="<%= userProfile.languages[i].language %>" class="connectToChat" type="submit" name="button"> Connect with <span> <%= found.fromUser %> </span> to practice <span> <%= userProfile.languages[i].language %></span> </button>
-							</form>
-							<%} else if (userProfile.languages[i].teachOrLearn === "learn"){
-
-								let myRequest = myRequests.find(request => request.language === userProfile.languages[i].language && request.fromUser === userProfile.email && request.status === 'waiting' )
-								console.log('looking for student request', myRequest, myRequests, userProfile.languages[i].language )
-								if (myRequest){ %>
-									<form class="startChat" action="/videoChat/<%=myRequest._id%>" method="get">
-										<button id="<%= userProfile.languages[i].language %>" class="connectToChat" type="submit" name="button"> Wait for Teacher to practice <span> <%= userProfile.languages[i].language %></span> </button>
-									</form>
-							<%	}%>
-							<!-- // add to this else if request is pending for user for requests that already exist (if it's pending, dont give them the choice to give other request) -->
-							<form class="searchChat">
-								<!-- // we want to get this to appear only when a teacher has accepted request -->
-								<button id="<%= userProfile.languages[i].language %>" class="connectToChat" type="submit" name="button"> Request to chat in <span> <%= userProfile.languages[i].language %></span> </button>
-							</form>
-							<%}%>
-						<!-- // turn html statement into an if statment - if yes, ubtton generates, if not, message "unable to find pair"
+							<li class="message majors">
+								<ul>
 
 
-						<!-- <%= requests.find(element => element.language === userProfile.languages[i].language) ? "Thank you! you will be notified when a pair is available" : "unable to find a pair" %> -->
-						</li>
-						<% } %>
+									<li><span class="stats">Language: <%= userProfile.languages[i].language %></span></li>
+									<li><span class="stats">Teach or Learn: <%= userProfile.languages[i].teachOrLearn %></span></li>
 
-					</ul>
+									<li> <span class="stats">Fluency: <%= userProfile.languages[i].fluency %> /30</span> </li>
+									<li><span><i class="fa fa-trash" aria-hidden="true"></i></span> </li>
+
+									<% if (found && userProfile.languages[i].language === found.language && userProfile.languages[i].teachOrLearn === "teach" ){ %>
+									<li>
+										<form class="startChat" action="/videoChat/<%=found._id%>" method="get">
+											<button id="<%= userProfile.languages[i].language %>" class="connectToChat" type="submit" name="button"> Connect with <span> <%= found.fromUser %> </span> to practice <span> <%= userProfile.languages[i].language %></span>
+											</button>
+										</form>
+										<li> <span class="pendingK">Request to teach Pending</span> </li>
+									</li>
+
+									<%} else if (userProfile.languages[i].teachOrLearn === "learn"){
+
+									let myRequest = myRequests.find(request => request.language === userProfile.languages[i].language && request.fromUser === userProfile.email && request.status === 'waiting' )
+									console.log('looking for student request', myRequest, myRequests, userProfile.languages[i].language )
+									if (myRequest){ %>
+									<li>
+										<form class="startChat" action="/videoChat/<%=myRequest._id%>" method="get">
+											<button id="<%= userProfile.languages[i].language %>" class="connectToChat" type="submit" name="button"> Wait for Teacher to practice <span> <%= userProfile.languages[i].language %></span> </button>
+										</form>
+									</li>
+									<%	}%>
+
+									<li>
+										<form class="searchChat">
+
+											<button id="<%= userProfile.languages[i].language %>" class="connectToChat" type="submit" name="button"> Request to chat in <span> <%= userProfile.languages[i].language %></span> </button>
+										</form>
+									</li>
+									<%}%>
+							</ul>
+							</li>
+							<% } %>
+
+								</ul>
+					</section>
+					<% } %>
 				</section>
-				<% } %>
+
 			</div>
 			<section class="addLanguage2">
 				<button class="addTo button primary" type="button" name="button"> <a class="addTo" href="/assessment"> Add Language to Profile</a>
 				</button>
+
+				<div class="books">
+					<img src="images/add.png" alt="">
+				</div>
 			</section>
 
 		</div>

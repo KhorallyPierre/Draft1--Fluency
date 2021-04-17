@@ -30,35 +30,107 @@ footer, header, hgroup, menu, nav, section {
   display: block;
 }
 
-
 .half {
   width: 30%;
   float: left;
 }
 
-.containerLanguage {
+.containerLanguage2 {
+  width: 33%;
+  float: left;
+  height: 630px;
+  overflow: scroll;
+  position: absolute;
+  left: 33%;
+  top: 22%;
+}
+
+.assessment {
+  color: rgb(198, 77, 100);
+  text-align: center;
+  margin-top: 20px;
+}
+
+.twoSidesRight {
+  width: 400px;
+  background-image: url('images/yess.png');
+  height: 700px;
+  float: left;
+  margin-left: 117px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.twoSidesLeft {
+  width: 400px;
+  background-image: url('images/typing.gif');
+  height: 700px;
+  float: left;
+  margin-left: 117px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+.assessment2 {
   width: 40%;
+  margin-left: 39px;
+  color: rgb(198, 77, 100);
+  height: 600px;
+  overflow: scroll;
+}
+
+.half {
+  width: 30%;
+  float: left;
+  margin-left: 39px;
+  color: rgb(198, 77, 100);
+}
+
+.addToProfile {
   float: left;
 }
 
-/* .page-wrapper {
-  margin-top: 70px;
-} */
+.startChat {
+  margin-top: 5px;
+}
 
+.stats {
+  width: 100%;
+}
+
+.containerLanguage {
+  height: 600px;
+}
+
+.changeTo {
+  color: rgb(130, 195, 178);
+  border-color: rgb(130, 195, 178);
+  font-weight: bolder;
+}
+
+/* .page-wrapper {
+  margin-left: 70px;
+} */
+.pendingK {
+  color: red;
+}
+
+.addPic {}
 
 .majors {
-  border: 2px solid lavender;
-  overflow:scroll;
-  height: 200px;
+  border: 2px solid rgba(198, 77, 100, .8);
+  height: 190px;
+  border-radius: 5%;
+  margin: 10px;
 }
 
 #about {
   text-align: center;
-font-size: 40px;
-margin-top: 100px;
-color: rgb(198, 77, 100);
+  font-size: 40px;
+  margin-top: 100px;
+  color: rgb(198, 77, 100);
 }
-
 
 body {
   line-height: 1;
@@ -66,8 +138,19 @@ body {
 
 .myLang, .userPage {
   color: rgb(198, 77, 100);
+  text-align: center;
+  height: 65px;
+  border-bottom: 7px solid;
+  margin-bottom: 45px;
 }
 
+.myLang2 {
+  color: rgb(198, 77, 100);
+  text-align: center;
+  height: 100px;
+  font-size: 24px;
+  overflow: visible;
+}
 
 ol, ul {
   list-style: none;
@@ -135,6 +218,34 @@ body.is-preload *, body.is-preload *:before, body.is-preload *:after {
   transition: none !important;
 }
 
+.alertt {
+  height: 400px;
+  width: 400px;
+  background-image: url(images/alert.jpg);
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 44%;
+  top: -4%;
+}
+
+.chatNow {
+  text-align: center;
+  color: red;
+  position: absolute;
+  left: 46%;
+  top: 1%;
+}
+
+.noAlertt {
+  height: 400px;
+  width: 400px;
+  background-image: url(images/glasses.jpg);
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 38.6%;
+  top: -14%;
+}
+
 body.is-preload {
   background-image: url('images/background.png');
 }
@@ -145,6 +256,19 @@ body, input, select, textarea {
   font-size: 15pt;
   font-weight: 100;
   line-height: 1.75em;
+}
+
+.connectToChat {
+  font-family: "Roboto", Helvetica, sans-serif;
+  padding: 10px;
+  font-size: 15px;
+}
+
+.books {
+  background-image: url('images/add.png');
+  height: 400px;
+  width: 600px;
+  background-repeat: no-repeat;
 }
 
 a {
@@ -282,13 +406,15 @@ pre code {
 }
 
 .love {
-  width: 25%;
+  width: 30%;
+  border-radius: 30%;
+  margin-top: 10px;
+  background-color: rgba(2, 2, 2, .5);
 }
 
 .fluency {
   color: rgb(198, 77, 100);
 }
-
 
 /* Loader */
 @-moz-keyframes spinner-show {
@@ -2232,6 +2358,7 @@ header.major {
   width: 100%;
   height: 100%;
 }
+
 header.major:after {
   background: #e44c65;
   content: '';
@@ -2248,14 +2375,14 @@ footer.major {
 /* Form */
 form {
   margin: 0 0 2em 0;
-  margin-top: 100px;
-
+  margin-top: 5px;
 }
 
 .addTo {
   color: white;
   padding: 40px;
-  margin-left: 30px;
+  margin-left: 16px;
+  font-size: 20px;
 }
 
 form.cta {
@@ -2267,6 +2394,9 @@ form.cta {
 .addLanguage2 {
   width: 20%;
   float: left;
+  position: absolute;
+  left: 69%;
+  top: 35%;
 }
 
 label {
@@ -3412,13 +3542,15 @@ body.landing .dropotron.level-0 {
   margin-top: 0;
 }
 
-
+.logoStyle {
+  background-color: red;
+}
 
 #header {
-  background: rgba(39, 40, 51, 0.965);
+  background: rgb(228 207 207 / 50%);
   box-shadow: 0 0 0.25em 0 rgba(0, 0, 0, 0.25);
   cursor: default;
-  height: 6.9em;
+  height: 3.9em;
   left: 0;
   line-height: 3.5em;
   top: 0;
@@ -3563,7 +3695,6 @@ body.landing #header {
 }
 
 #banner .content .image img {
-
   display: block;
   width: 101%;
   padding-top: 1px;
@@ -3576,7 +3707,7 @@ body.is-touch #banner {
 
 /* Footer */
 #footer {
-  background: #272833;
+  background: rgba(225, 225, 225, .5);
   padding: 1em 0;
   text-align: center;
   clear: both;
@@ -3605,9 +3736,9 @@ body.is-touch #banner {
 }
 
 #footer .copyright {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 0.8em;
-  line-height: 1em;
+  line-height: 10px;
   margin: 2em 0 0 0;
   padding: 0;
   text-align: center;
@@ -3835,6 +3966,10 @@ body.is-touch #banner {
 
   .spotlight .image.main {
     max-height: 60vh;
+  }
+
+  #main {
+    margin-bottom: 500px;
   }
 
   .spotlight .content {
@@ -4117,6 +4252,5 @@ body.is-touch #banner {
     padding: 0;
   }
 }
-
 
 /* //////////////////////////// login.ejs ============== */
